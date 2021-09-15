@@ -2,7 +2,7 @@
 title: "Windows PE file"
 classes: wide
 header:
-  teaser: /m/assets/images/articles/windowspe/windows.png
+  teaser: /assets/images/articles/windowspe/windows.png
 ribbon: DodgerBlue
 description: "An inside look at pe file."
 categories:
