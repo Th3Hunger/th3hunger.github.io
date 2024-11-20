@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>0xTh3Hunger</title>
+    <title>0xth3hunger</title>
     <link>https://Th3Hunger.github.io/</link>
-    <description>Recent content on 0xTh3Hunger</description>
+    <description>Recent content on 0xth3hunger</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 19 Nov 2024 13:32:50 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 20 Nov 2024 13:10:52 +0100</lastBuildDate>
     <atom:link href="https://Th3Hunger.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Finding Peace with Tinnitus: My Journey to Habituation</title>
+      <link>https://Th3Hunger.github.io/posts/finding-peace-with-tinnitus/</link>
+      <pubDate>Wed, 20 Nov 2024 13:10:52 +0100</pubDate>
+      <guid>https://Th3Hunger.github.io/posts/finding-peace-with-tinnitus/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Image&#34; src=&#34;https://img.freepik.com/premium-photo/there-is-man-sitting-dark-room-with-window-generative-ai_1034973-12687.jpg&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Have you ever heard a sound that wasn’t really there? For me, that sound was a constant, high-pitched ringing in my ears. It started faintly, barely noticeable, but soon it became impossible to ignore. My name is Shady Shahin, and this is the story of my journey with tinnitus.&lt;/p&gt;&#xA;&lt;p&gt;Like many others, I struggled to understand what was happening and how to cope with it. Tinnitus disrupted my sleep, my focus, my work, and everything. But over time, I found ways to manage and refine my experience, turning what once felt like an overwhelming burden into something I could live with.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>About</title>
       <link>https://Th3Hunger.github.io/about/</link>
       <pubDate>Tue, 19 Nov 2024 13:32:50 +0100</pubDate>
       <guid>https://Th3Hunger.github.io/about/</guid>
-      <description>&lt;p&gt;A cybersecurity enthusiast and software engineer with a passion for building secure systems and developing adversary simulation tools. Experienced in creating innovative solutions to tackle modern security challenges. Currently pursuing a Master’s in Computer Science, with a focus on innovating at the intersection of software development and security..&lt;/p&gt;&#xA;&lt;p&gt;📧 &lt;strong&gt;Contact:&lt;/strong&gt; &lt;a href=&#34;mailto:shady.shahin7@icloud.com&#34; &gt;shady.shahin7@icloud.com&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>First Post</title>
-      <link>https://Th3Hunger.github.io/posts/first-post/</link>
-      <pubDate>Tue, 19 Nov 2024 13:10:52 +0100</pubDate>
-      <guid>https://Th3Hunger.github.io/posts/first-post/</guid>
-      <description>&lt;p&gt;Welcome to my first post on cybersecurity and life experiences!&lt;/p&gt;</description>
+      <description>&lt;p&gt;A cybersecurity enthusiast and software engineer with a passion for building secure systems, developing adversary simulation tools, and exploring malware development and red teaming. Experienced in creating innovative solutions to tackle modern security challenges. Currently pursuing a Master’s in Computer Science, with a focus on innovating at the intersection of software development and security.&lt;/p&gt;&#xA;&lt;p&gt;📧 &lt;strong&gt;Contact:&lt;/strong&gt; &lt;a href=&#34;mailto:shady.shahin7@icloud.com&#34; &gt;shady.shahin7@icloud.com&lt;/a&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
