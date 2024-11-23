@@ -2,24 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://Th3Hunger.github.io/</loc>
-    <lastmod>2024-11-21T00:00:00+01:00</lastmod>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-11-23T00:00:00+01:00</lastmod>
   </url><url>
-    <loc>https://Th3Hunger.github.io/posts/finding-peace-with-tinnitus/</loc>
-    <lastmod>2024-11-21T00:00:00+01:00</lastmod>
+    <loc>http://localhost:1313/posts/finding-peace-with-tinnitus/</loc>
+    <lastmod>2024-11-23T00:00:00+01:00</lastmod>
   </url><url>
-    <loc>https://Th3Hunger.github.io/posts/</loc>
-    <lastmod>2024-11-21T00:00:00+01:00</lastmod>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-11-23T00:00:00+01:00</lastmod>
   </url><url>
-    <loc>https://Th3Hunger.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2024-11-19T13:32:50+01:00</lastmod>
   </url><url>
-    <loc>https://Th3Hunger.github.io/authors/</loc>
+    <loc>http://localhost:1313/authors/</loc>
   </url><url>
-    <loc>https://Th3Hunger.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://Th3Hunger.github.io/series/</loc>
+    <loc>http://localhost:1313/series/</loc>
   </url><url>
-    <loc>https://Th3Hunger.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>
