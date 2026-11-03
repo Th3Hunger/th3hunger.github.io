@@ -1,0 +1,5 @@
+/public/
+/resources/_gen/
+.hugo_build.lock
+.DS_Store
+/design_handoff_0xth3hunger_blog/

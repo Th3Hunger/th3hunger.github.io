@@ -1,0 +1,11 @@
+{{- $where := "" }}{{ with .File }}{{ $where = .Path }}{{ end -}}
+{{- $st := site.Params.statuses -}}
+{{- if not .Title }}{{ errorf "%s: missing title" $where }}{{ end -}}
+{{- with .Params.status -}}
+  {{- if not (in $st .) }}{{ errorf "%s: status %q is not allowed. Use one of: %s" $where . (delimit $st ", ") }}{{ end -}}
+{{- else -}}
+  {{- errorf "%s: missing status. Use one of: %s" $where (delimit $st ", ") -}}
+{{- end -}}
+{{- with .Params.stack -}}
+  {{- if not (reflect.IsSlice .) }}{{ errorf "%s: stack must be a list, like: stack: [rust, windows]" $where }}{{ end -}}
+{{- end -}}

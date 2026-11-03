@@ -1,0 +1,16 @@
+{{- $pages := (where site.RegularPages "Section" .Section).ByDate.Reverse -}}
+{{- $i := -1 -}}
+{{- range $k, $p := $pages }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $i = $k }}{{ end }}{{ end -}}
+{{- $older := false }}{{ $newer := false -}}
+{{- if and (ge $i 0) (lt (add $i 1) (len $pages)) }}{{ $older = index $pages (add $i 1) }}{{ end -}}
+{{- if gt $i 0 }}{{ $newer = index $pages (sub $i 1) }}{{ end -}}
+{{- if or $older $newer }}
+<nav class="pn" aria-label="more posts">
+  {{- with $older }}
+  <a href="{{ .RelPermalink }}" rel="prev"><span class="m">← previous</span><b>{{ .Title }}</b></a>
+  {{- end }}
+  {{- with $newer }}
+  <a class="nx" href="{{ .RelPermalink }}" rel="next"><span class="m">next →</span><b>{{ .Title }}</b></a>
+  {{- end }}
+</nav>
+{{- end }}

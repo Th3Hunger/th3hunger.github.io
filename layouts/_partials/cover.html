@@ -1,0 +1,34 @@
+{{- /* Optional header image under a post's title.
+     Front matter: cover (a file in the post's folder, or a full URL), coverAlt, coverCredit (Markdown).
+     A local photo is cropped to 21:9 at build time in four widths (WebP), so every screen gets a
+     sharp, right-sized file (phones ~800px, retina laptops 2400px). Clicking shows the whole photo. */ -}}
+{{- $p := .page -}}
+{{- $u := urls.Parse .src -}}
+{{- $src := .src }}{{ $full := .src }}{{ $srcset := "" }}{{ $w := 0 }}{{ $h := 0 -}}
+{{- if not $u.IsAbs -}}
+  {{- with $p.Resources.Get .src -}}
+    {{- $full = .RelPermalink }}{{ $src = .RelPermalink -}}
+    {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType -}}
+      {{- $img := . -}}
+      {{- $set := slice -}}
+      {{- $widths := slice -}}
+      {{- range slice 800 1200 1600 2400 }}{{ if le . $img.Width }}{{ $widths = $widths | append . }}{{ end }}{{ end -}}
+      {{- if not $widths }}{{ $widths = slice $img.Width }}{{ end -}}
+      {{- range $cw := $widths -}}
+        {{- $r := $img.Fill (printf "%dx%d webp q80 Center" $cw (div (mul $cw 9) 21)) -}}
+        {{- $set = $set | append (printf "%s %dw" $r.RelPermalink $cw) -}}
+        {{- if or (eq $cw 1200) (not $w) }}{{ $src = $r.RelPermalink }}{{ $w = $r.Width }}{{ $h = $r.Height }}{{ end -}}
+      {{- end -}}
+      {{- $srcset = delimit $set ", " -}}
+      {{- $full = ($img.Fit "2000x2000 webp q85").RelPermalink -}}
+    {{- end -}}
+  {{- else -}}
+    {{- errorf "%s: cover image %q not found in the post's folder" $p.File.Path .src -}}
+  {{- end -}}
+{{- end -}}
+<figure class="cover">
+  <a class="shot img" href="{{ $full }}" data-lb aria-label="open image"><img src="{{ $src }}"{{ with $srcset }} srcset="{{ . }}" sizes="(max-width: 760px) 100vw, 1000px"{{ end }} alt="{{ .alt }}"{{ with $w }} width="{{ . }}" height="{{ $h }}"{{ end }} decoding="async" fetchpriority="high"></a>
+  {{- with .credit }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

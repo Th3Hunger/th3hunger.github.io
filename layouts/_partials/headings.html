@@ -1,0 +1,7 @@
+{{- /* Flattens the heading tree to the level-1/2 headings that have an id. */ -}}
+{{- $out := slice -}}
+{{- range . -}}
+  {{- if and .ID (le .Level 2) (ge .Level 1) }}{{ $out = $out | append . }}{{ end -}}
+  {{- with .Headings }}{{ range partial "headings.html" . }}{{ $out = $out | append . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,0 +1,10 @@
+{{- /* $inline$ \(inline\) $$block$$ \[block\] → KaTeX HTML at build time. No JavaScript on the page. */ -}}
+{{- $block := eq .Type "block" -}}
+{{- with try (transform.ToMath .Inner (dict "output" "htmlAndMathml" "displayMode" $block)) -}}
+  {{- with .Err -}}
+    {{- errorf "%s: math could not be rendered: %s" $.Position . -}}
+  {{- else -}}
+    {{- $.Page.Store.Set "hasMath" true -}}
+    {{- if $block }}<div class="math">{{ .Value }}</div>{{ else }}{{ .Value }}{{ end -}}
+  {{- end -}}
+{{- end -}}

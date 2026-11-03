@@ -1,0 +1,30 @@
+{{- $cur := .RelPermalink -}}
+{{- $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+{{- $projects := (where site.RegularPages "Section" "projects").ByTitle -}}
+<aside id="files" aria-label="files">
+  <div class="lbl">EXPLORER</div>
+  <ul class="tree">
+    <li><a class="f root{{ if .IsHome }} on{{ end }}" href="{{ "/" | relURL }}"{{ if .IsHome }} aria-current="page"{{ end }}><i>i</i>README.md</a></li>
+    <li><button class="dir" type="button" data-dir="projects" aria-expanded="true">projects</button>
+      <ul>
+        {{- range $projects }}
+        <li><a class="f{{ if eq .RelPermalink $cur }} on{{ end }}" href="{{ .RelPermalink }}"{{ if eq .RelPermalink $cur }} aria-current="page"{{ end }}><i>›</i><span>{{ .File.ContentBaseName }}/</span></a></li>
+        {{- else }}
+        <li><span class="f soon"><i></i>coming soon</span></li>
+        {{- end }}
+      </ul>
+    </li>
+    <li><button class="dir" type="button" data-dir="blog" aria-expanded="true">blog</button>
+      <ul>
+        {{- range $posts }}
+        <li><a class="f{{ if eq .RelPermalink $cur }} on{{ end }}" href="{{ .RelPermalink }}" title="{{ .Title }}"{{ if eq .RelPermalink $cur }} aria-current="page"{{ end }}><i>#</i><span>{{ .File.ContentBaseName }}.md</span></a></li>
+        {{- else }}
+        <li><span class="f soon"><i></i>nothing yet</span></li>
+        {{- end }}
+      </ul>
+    </li>
+  </ul>
+  <div class="msoc">{{ partial "social.html" . }}<span class="tg" role="group" aria-label="theme"><button type="button" data-set-theme="dark" aria-pressed="false">dark</button><button type="button" data-set-theme="light" aria-pressed="false">light</button></span></div>
+</aside>
+{{- /* Folder open/closed state, applied before paint. */}}
+<script>(function(){try{var s=JSON.parse(localStorage.getItem("dirs")||"{}");document.querySelectorAll("#files .dir").forEach(function(d){if(s[d.dataset.dir]){d.classList.add("shut");d.setAttribute("aria-expanded","false")}})}catch(e){}})()</script>

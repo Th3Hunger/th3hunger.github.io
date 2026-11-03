@@ -1,0 +1,14 @@
+{{- /* The "file" a page is shown as in the explorer and tabs. */ -}}
+{{- $f := "" -}}
+{{- if .IsHome -}}
+  {{- $f = "README.md" -}}
+{{- else if eq .Kind "404" -}}
+  {{- $f = "404.md" -}}
+{{- else if eq .Kind "section" -}}
+  {{- $f = printf "%s/" (path.Base .RelPermalink) -}}
+{{- else if eq .Section "projects" -}}
+  {{- $f = printf "%s/" .File.ContentBaseName -}}
+{{- else -}}
+  {{- with .File }}{{ $f = printf "%s.md" .ContentBaseName }}{{ else }}{{ $f = printf "%s.md" (.Title | urlize) }}{{ end -}}
+{{- end -}}
+{{- return $f -}}

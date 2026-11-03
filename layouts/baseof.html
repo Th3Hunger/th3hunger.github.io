@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+<head>
+{{ partial "head.html" . }}
+</head>
+<body>
+{{- /* Explorer state before first paint: closed on phones, or if the visitor closed it. */}}
+<script>(function(){var s=null;try{s=localStorage.getItem("files")}catch(e){}if(window.innerWidth<=760||s==="0")document.body.classList.add("nofiles")})()</script>
+<a class="skip" href="#view">skip to content</a>
+{{ partial "bar.html" . }}
+{{ partial "explorer.html" . }}
+<main id="mainpane">
+{{ partial "tabs.html" . }}
+<div class="view" id="view" tabindex="-1">
+{{ block "main" . }}{{ end }}
+</div>
+</main>
+{{ partial "quickopen.html" . }}
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="image preview"><img id="lbi" alt=""></div>
+{{ partial "scripts.html" . }}
+</body>
+</html>

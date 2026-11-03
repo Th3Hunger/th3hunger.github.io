@@ -1,0 +1,24 @@
+{{ define "main" }}
+{{- partial "validate-post.html" . -}}
+<div class="pw">
+  <article class="post">
+    <h1>{{ .Title }}</h1>
+    <div class="meta">
+      <span class="chip k-{{ .Params.category }}">{{ .Params.category }}</span>
+      {{- if .Draft }}<span class="chip draft">draft</span>{{ end }}
+      <span class="m"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time> · {{ .ReadingTime }} min</span>
+      {{- range .Params.tags }}
+      <a class="tagl" href="{{ "/" | relURL }}?tag={{ . | urlquery }}">#{{ . }}</a>
+      {{- end }}
+    </div>
+    {{- with .Params.cover }}
+    {{ partial "cover.html" (dict "page" $ "src" . "alt" ($.Params.coverAlt | default "") "credit" $.Params.coverCredit) }}
+    {{- end }}
+    <div class="body" id="body">
+{{ .Content }}
+    </div>
+    {{ partial "prevnext.html" . }}
+  </article>
+  {{ partial "outline.html" . }}
+</div>
+{{ end }}

@@ -1,0 +1,9 @@
+{{- with . }}
+<div class="grid">
+  {{- range . }}
+  {{ partial "project-card.html" . }}
+  {{- end }}
+</div>
+{{- else }}
+<div class="empty">coming soon</div>
+{{- end }}

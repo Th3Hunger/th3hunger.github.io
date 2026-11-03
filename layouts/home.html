@@ -1,0 +1,17 @@
+{{ define "main" }}
+{{- $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+{{- $projects := (where site.RegularPages "Section" "projects").ByTitle -}}
+<div class="hero">
+  <h1>{{ .Params.headline | default site.Title | markdownify }}&#8288;<span class="caret" aria-hidden="true"></span></h1>
+  {{- with .Params.lead }}
+  <p class="lead">{{ . | markdownify }}</p>
+  {{- end }}
+  {{- with .Params.links }}
+  <p class="lnk">{{ . | markdownify }}</p>
+  {{- end }}
+</div>
+{{ partial "post-grid.html" $posts }}
+<div class="seclbl">projects</div>
+{{ partial "project-grid.html" $projects }}
+<div class="end">© {{ now.Year }} 0xth3hunger</div>
+{{ end }}

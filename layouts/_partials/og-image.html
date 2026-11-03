@@ -1,0 +1,51 @@
+{{- /* Share image, 1200×630, built at build time from the design (design_handoff/site/og-image.html).
+     Fixed layers (background, footer, chips) were rendered from the design CSS; this draws the
+     per-page parts: tab names, title and meta line. Positions match the design's layout.
+     Font metrics (Geist): ascent 1.005em, descent .295em, so baselines are computed, not guessed. */ -}}
+{{- if eq .Kind "404" }}{{ return false }}{{ end -}}
+{{- $fTitle := resources.Get "og/Geist-SemiBold.ttf" -}}
+{{- $fTab := resources.Get "og/GeistMono-Medium.ttf" -}}
+{{- $fMeta := resources.Get "og/GeistMono-Regular.ttf" -}}
+{{- $base := resources.Get "og/base.png" -}}
+{{- $sep := resources.Get "og/tab-sep.png" -}}
+{{- $isPost := and .IsPage (eq .Section "posts") -}}
+
+{{- /* tab strip: active file + README.md (Geist Mono 22px → 13.2px per character, 28px padding) */ -}}
+{{- $file := partial "filename.html" . -}}
+{{- $w1 := add 57 (mul (len $file) 13.2) | math.Round | int -}}
+{{- $filters := slice
+    (images.Overlay ((resources.Get "og/tab-on.png").Resize (printf "%dx63 NearestNeighbor" (sub $w1 1))) 0 0)
+    (images.Overlay $sep (sub $w1 1) 0)
+    (images.Text $file (dict "font" $fTab "size" 22 "color" "#f8f8f2" "x" 28 "y" 16)) -}}
+{{- if not .IsHome -}}
+  {{- $filters = $filters | append
+      (images.Text "README.md" (dict "font" $fTab "size" 22 "color" "#6272a4" "x" (add $w1 28) "y" 16))
+      (images.Overlay $sep (add $w1 175) 0) -}}
+{{- end -}}
+
+{{- /* title: Geist 600, line-height 1.05, wraps inside the design's 17ch box (813px) */ -}}
+{{- $title := .Title -}}
+{{- if .IsHome }}{{ $title = .Params.headline | default site.Title | markdownify | plainify | htmlUnescape }}{{ end -}}
+{{- $title = $title | truncate 170 -}}
+{{- $n := len $title -}}
+{{- $size := 70 }}{{ $ls := 2 }}{{ $y := 115 -}}
+{{- if gt $n 105 }}{{ $size = 46 }}{{ $ls = 1 }}{{ $y = 118 }}{{ else if gt $n 68 }}{{ $size = 56 }}{{ $ls = 2 }}{{ $y = 116 }}{{ end -}}
+{{- $canvas := (resources.Get "og/bg.png").Resize "833x330 NearestNeighbor" | images.Filter
+    (images.Text $title (dict "font" $fTitle "size" $size "color" "#f8f8f2" "x" 0 "y" 0 "linespacing" $ls)) -}}
+{{- $filters = $filters | append (images.Overlay $canvas 72 $y) -}}
+
+{{- /* meta row: category chip + "date · N min · #tags" (posts), or the site address */ -}}
+{{- if $isPost -}}
+  {{- $chip := resources.Get (printf "og/chip-%s.png" .Params.category) -}}
+  {{- $hash := slice }}{{ range .Params.tags }}{{ $hash = $hash | append (printf "#%s" .) }}{{ end -}}
+  {{- $meta := printf "%s · %d min" (.Date.Format "2006-01-02") .ReadingTime -}}
+  {{- with $hash }}{{ $meta = printf "%s · %s" $meta (delimit . " ") }}{{ end -}}
+  {{- $x := 88 -}}
+  {{- with $chip }}{{ $filters = $filters | append (images.Overlay . 72 480) }}{{ $x = add 88 .Width }}{{ end -}}
+  {{- $filters = $filters | append (images.Text $meta (dict "font" $fMeta "size" 22 "color" "#a6accd" "x" $x "y" 484)) -}}
+{{- else -}}
+  {{- $host := site.Params.domain | default "th3hunger.github.io" -}}
+  {{- $filters = $filters | append (images.Text $host (dict "font" $fMeta "size" 22 "color" "#a6accd" "x" 72 "y" 484)) -}}
+{{- end -}}
+
+{{- return ($base | images.Filter $filters) -}}

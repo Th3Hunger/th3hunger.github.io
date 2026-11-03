@@ -1,0 +1,4 @@
+{{- /* Fenced code. The script adds the language label + copy button (keeps RSS/search text clean).
+     Optional: ```python {title="exploit.py" hl_lines=[2,3] linenos=true} */ -}}
+{{- $r := transform.HighlightCodeBlock . -}}
+<div class="code"{{ with .Type }} data-lang="{{ . }}"{{ end }}{{ with .Attributes.title }} data-title="{{ . }}"{{ end }}>{{ $r.Wrapped }}</div>

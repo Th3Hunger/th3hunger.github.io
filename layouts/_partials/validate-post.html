@@ -1,0 +1,14 @@
+{{- /* Fail the build on front-matter mistakes, so a typo never goes live. */ -}}
+{{- $p := . -}}
+{{- $where := "" }}{{ with .File }}{{ $where = .Path }}{{ end -}}
+{{- $cats := site.Params.categories -}}
+{{- if not .Title }}{{ errorf "%s: missing title" $where }}{{ end -}}
+{{- with .Params.category -}}
+  {{- if not (in $cats .) }}{{ errorf "%s: category %q is not allowed. Use one of: %s" $where . (delimit $cats ", ") }}{{ end -}}
+{{- else -}}
+  {{- errorf "%s: missing category. Use one of: %s" $where (delimit $cats ", ") -}}
+{{- end -}}
+{{- with .Params.tags -}}
+  {{- if not (reflect.IsSlice .) }}{{ errorf "%s: tags must be a list, like: tags: [ad, htb]" $where }}{{ end -}}
+{{- end -}}
+{{- if not .Description }}{{ warnf "%s: no description (the card will use the first lines of the post)" $where }}{{ end -}}

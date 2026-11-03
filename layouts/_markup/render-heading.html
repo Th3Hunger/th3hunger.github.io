@@ -1,0 +1,6 @@
+{{- /* The post title is the page's only h1, so a "# Heading" in a post renders as a section (h2). */ -}}
+{{- $lvl := .Level }}{{ if eq $lvl 1 }}{{ $lvl = 2 }}{{ end -}}
+<h{{ $lvl }} id="{{ .Anchor }}"
+  {{- range $k, $v := .Attributes }}{{ if ne $k "id" }} {{ printf "%s=%q" $k (string $v) | safeHTMLAttr }}{{ end }}{{ end }}>
+  {{- .Text -}}
+</h{{ $lvl }}>

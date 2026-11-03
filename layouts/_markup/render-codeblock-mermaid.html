@@ -1,0 +1,4 @@
+{{- /* ```mermaid — drawn in the browser; the Mermaid script only loads on pages that have one.
+     .Inner is escaped once by the template engine (don't add htmlEscape: it would double-escape --> ). */ -}}
+{{- .Page.Store.Set "hasMermaid" true -}}
+<div class="diagram"><pre class="mermaid">{{ .Inner }}</pre></div>

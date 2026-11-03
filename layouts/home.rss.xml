@@ -1,0 +1,37 @@
+{{- /* RSS at /index.xml — same address as the old site, so existing subscribers keep getting posts. */ -}}
+{{- $pages := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+{{- with site.Config.Services.RSS.Limit }}{{ if ge . 1 }}{{ $pages = $pages | first . }}{{ end }}{{ end -}}
+{{- $base := strings.TrimSuffix "/" site.BaseURL -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.Title }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ site.Params.description }}</description>
+    <language>{{ site.Language.Locale | default "en" }}</language>
+    {{- with $pages }}
+    <lastBuildDate>{{ (index . 0).Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end }}
+    {{- with .OutputFormats.Get "rss" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType.Type | safeHTML }}
+    {{- end }}
+    {{- range $pages }}
+    {{- /* make root-relative links/images absolute for feed readers */}}
+    {{- $post := . }}
+    {{- $html := string .Content }}
+    {{- with .Params.cover }}
+      {{- $c := . }}{{ if not (urls.Parse .).IsAbs }}{{ with $post.Resources.Get . }}{{ $c = (.Fill "1200x514 webp q80 Center").RelPermalink }}{{ end }}{{ end }}
+      {{- $html = printf "<p><img src=\"%s\" alt=\"%s\"></p>%s" ($c | htmlEscape) ($post.Params.coverAlt | default "" | htmlEscape) $html }}
+    {{- end }}
+    {{- $html = $html | replaceRE `(src|href)="/` (printf `$1="%s/` $base) }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid>{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <category>{{ .Params.category }}</category>
+      <description>{{ $html | transform.XMLEscape | safeHTML }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

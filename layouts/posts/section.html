@@ -1,0 +1,7 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{- with .Params.lead }}
+<p class="lead">{{ . | markdownify }}</p>
+{{- end }}
+{{ partial "post-grid.html" .RegularPages.ByDate.Reverse }}
+{{ end }}

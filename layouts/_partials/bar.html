@@ -1,0 +1,15 @@
+{{- $s := site.Params.social -}}
+<header class="bar">
+  <span class="l">
+    <button class="sb" id="sb" type="button" aria-pressed="false" aria-controls="files" title="Toggle files (Ctrl+B)">files</button>
+    <a class="mark" href="{{ "/" | relURL }}"><span>0x</span>th3hunger</a>
+  </span>
+  <span class="r">
+    <button class="qbtn" id="qbtn" type="button" aria-haspopup="dialog" title="Search (Ctrl+P)">search <kbd>⌃P</kbd></button>
+    <span class="links">{{ partial "social.html" . }}</span>
+    <span class="tg" role="group" aria-label="theme">
+      <button type="button" data-set-theme="dark" aria-pressed="false">dark</button>
+      <button type="button" data-set-theme="light" aria-pressed="false">light</button>
+    </span>
+  </span>
+</header>

@@ -1,0 +1,36 @@
+{{- /* ![caption](file.png) on its own line → numbered figure, click to zoom.
+     Images in the post's folder are resized (max 1600px wide) and converted to WebP. */ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $alt := .PlainText -}}
+{{- $caption := .Title | default .Text -}}
+{{- $res := false -}}
+{{- if not $u.IsAbs -}}
+  {{- $p := strings.TrimPrefix "./" $u.Path -}}
+  {{- with .PageInner.Resources.Get $p }}{{ $res = . }}{{ else }}{{ with resources.Get $p }}{{ $res = . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- $src := .Destination -}}
+{{- $full := .Destination -}}
+{{- $w := 0 }}{{ $h := 0 -}}
+{{- with $res -}}
+  {{- $src = .RelPermalink }}{{ $full = .RelPermalink -}}
+  {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType -}}
+    {{- $hint := cond (eq .MediaType.SubType "png") "text" "picture" -}}
+    {{- $img := . -}}
+    {{- if gt .Width 1600 -}}
+      {{- $img = .Resize (printf "1600x webp %s" $hint) -}}
+    {{- else if ne .MediaType.SubType "webp" -}}
+      {{- $img = .Process (printf "webp %s" $hint) -}}
+    {{- end -}}
+    {{- $src = $img.RelPermalink }}{{ $w = $img.Width }}{{ $h = $img.Height -}}
+  {{- else if eq .MediaType.SubType "gif" -}}
+    {{- $w = .Width }}{{ $h = .Height -}}
+  {{- end -}}
+{{- end -}}
+{{- if .IsBlock -}}
+<figure>
+  <a class="shot img" href="{{ $full }}" data-lb aria-label="open image: {{ $alt }}"><img src="{{ $src }}" alt="{{ $alt }}"{{ with $w }} width="{{ . }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async"></a>
+  <figcaption>fig.{{ printf "%02d" (add .Ordinal 1) }}{{ with $caption }} — {{ . }}{{ end }}</figcaption>
+</figure>
+{{- else -}}
+<img src="{{ $src }}" alt="{{ $alt }}"{{ with $w }} width="{{ . }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async">
+{{- end -}}

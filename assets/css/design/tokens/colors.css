@@ -1,0 +1,16 @@
+/* 0xth3hunger — colours. Two themes: dark (default) and light, set via <html data-theme="light">.
+   Values come from the Dracula / Alucard palettes (draculatheme.com, MIT) — but the themes are just called "dark" and "light". */
+:root{
+--bg:#282a36;--surface:#2e303e;--sidebar:#21222c;--bar:#191a21;--chip:#383a4c;
+--border:#383a4a;--border-strong:#44475a;
+--text:#f8f8f2;--text-muted:#a6accd;--text-faint:#6272a4;
+--accent:#bd93f9;--on-accent:#21222c;
+--pink:#ff79c6;--green:#50fa7b;--cyan:#8be9fd;--orange:#ffb86c;--red:#ff5555;--yellow:#f1fa8c;
+}
+[data-theme="light"]{
+--bg:#fffbeb;--surface:#fffdf4;--sidebar:#f4efdb;--bar:#ece6cf;--chip:#f3edd8;
+--border:#e3dcc5;--border-strong:#d6ceb5;
+--text:#1f1f1f;--text-muted:#635d97;--text-faint:#8f8ab0;
+--accent:#644ac9;--on-accent:#fffbeb;
+--pink:#a3144d;--green:#14710a;--cyan:#036a96;--orange:#a34d14;--red:#b3123f;--yellow:#846e15;
+}

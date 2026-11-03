@@ -1,0 +1,76 @@
+baseURL = "https://th3hunger.github.io/"
+locale = "en"
+title = "0xth3hunger"
+enableRobotsTXT = true
+# Tags filter on the home page instead of getting their own pages.
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Security engineer. Technical stuff, research, projects, and whatever else I feel like sharing."
+  # The only allowed post categories. A post with anything else fails the build.
+  categories = ["technical", "research", "personal"]
+  # Allowed project statuses.
+  statuses = ["active", "wip", "archived"]
+  xHandle = "@0xth3hunger"
+  # shown on share images
+  domain = "th3hunger.github.io"
+  [params.social]
+    github = "https://github.com/Th3Hunger/"
+    linkedin = "https://www.linkedin.com/in/shadyshahin/"
+    x = "https://x.com/0xth3hunger"
+
+# Markdown lives in content/posts/, visitors see /blog/.
+[permalinks]
+  [permalinks.page]
+    posts = "/blog/:slugorcontentbasename/"
+    projects = "/projects/:slugorcontentbasename/"
+  [permalinks.section]
+    posts = "/blog/"
+    projects = "/projects/"
+
+# /search.json feeds the Ctrl+P quick-open box.
+[outputFormats]
+  [outputFormats.search]
+    mediaType = "application/json"
+    baseName = "search"
+    isPlainText = true
+    notAlternative = true
+
+[outputs]
+  home = ["html", "rss", "search"]
+  section = ["html"]
+  page = ["html"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      # An image alone on its line becomes a figure (not wrapped in <p>).
+      wrapStandAloneImageWithinParagraph = false
+      [markup.goldmark.parser.attribute]
+        block = true
+    [markup.goldmark.renderer]
+      # Allows raw HTML in posts (<details>, <kbd>, …). Only you write the content.
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        # Math: $inline$, \(inline\), $$block$$, \[block\]. Rendered at build time (KaTeX).
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+  [markup.highlight]
+    # Emit CSS classes; colours come from the theme tokens.
+    noClasses = false
+    lineNumbersInTable = false
+    tabWidth = 4
+
+[services]
+  [services.rss]
+    limit = 30
+
+[imaging]
+  resampleFilter = "Lanczos"
+  [imaging.webp]
+    quality = 85
+  [imaging.jpeg]
+    quality = 85

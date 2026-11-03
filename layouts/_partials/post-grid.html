@@ -1,0 +1,19 @@
+{{- /* Filter row (all | technical | research | personal) + posts grid.
+     Filtering is client-side and mirrored to ?category=…  Tag links (?tag=…) add a removable #tag pill. */ -}}
+{{- $pages := . -}}
+{{- if $pages }}
+<div class="flt" id="flt" role="toolbar" aria-label="filter posts">
+  <button type="button" data-k="all" class="on" aria-pressed="true">all</button>
+  {{- range site.Params.categories }}
+  <button type="button" data-k="{{ . }}" aria-pressed="false">{{ . }}</button>
+  {{- end }}
+</div>
+<div class="grid" id="posts">
+  {{- range $pages }}
+  {{ partial "post-card.html" . }}
+  {{- end }}
+</div>
+<div class="empty" id="noposts" hidden>no posts match — clear a filter</div>
+{{- else }}
+<div class="empty" style="margin-top:clamp(32px,4vw,56px)">no posts yet</div>
+{{- end }}

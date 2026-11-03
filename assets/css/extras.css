@@ -1,0 +1,174 @@
+/* 0xth3hunger — additions for the real (Hugo) site. Loaded after design/site.css.
+   Tokens only, no hard-coded colours. Everything here covers something the prototype
+   didn't need: real links/anchors, Markdown elements, Chroma highlighting, math, diagrams. */
+
+/* native UI (scrollbars, checkboxes) follows the theme */
+:root{color-scheme:dark}
+[data-theme="light"]{color-scheme:light}
+[hidden]{display:none!important}
+
+/* state-driven styles, so nothing flashes before the script runs */
+:root:not([data-theme="light"]) .tg [data-set-theme="dark"],
+[data-theme="light"] .tg [data-set-theme="light"]{background:var(--accent);color:var(--on-accent)}
+body:not(.nofiles) .sb{color:var(--text);background:var(--border)}
+
+/* tabs are real links; the whole tab is clickable, the × sits on top */
+.tab{position:relative}
+.tab>a{color:inherit}
+.tab>a::after{content:"";position:absolute;inset:0}
+.tab button{position:relative;z-index:1}
+
+/* phones: the top bar can't fit the theme toggle, so it moves to the explorer
+   footer (same idea as the social links moving there below 1000px) */
+.msoc .tg{display:none}
+@media(max-width:480px){.bar .tg{display:none}.msoc .tg{display:inline-flex;margin-left:auto}}
+
+/* explorer */
+.tree .f span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tree .soon{color:var(--text-faint);cursor:default}
+.tree .soon:hover{background:none}
+
+/* cards + chips */
+.k-technical{color:var(--cyan)}.k-research{color:var(--pink)}.k-personal{color:var(--green)}
+.chip.draft{color:var(--orange)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.card .pname{color:var(--text);font-size:14.5px}
+.card .pdesc{color:var(--text)}
+.card .gh{color:var(--accent)}
+.foot .m:first-child{white-space:normal}
+.meta .m{color:var(--text-muted)}
+.view>.lead+.flt{margin-top:clamp(24px,3vw,40px)}
+
+/* home hero: two-line headline, gradient highlight, blinking editor caret, link row */
+.hero .lnk{margin-top:18px;display:flex;gap:20px;flex-wrap:wrap;font:500 14px var(--font-mono)}
+.hero .lnk a{color:var(--accent)}.hero .lnk a:hover{color:var(--text)}
+.hero h1 em{background:linear-gradient(90deg,var(--accent),var(--pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero h1 em::selection{-webkit-text-fill-color:var(--on-accent)}
+.hero .caret{display:inline-block;width:.07em;height:.82em;margin-left:.1em;vertical-align:-.06em;background:var(--pink);border-radius:1px;animation:caret 1.1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero .caret{animation:none}}
+
+/* ---------- post body: Markdown elements ---------- */
+.body a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in oklab,var(--accent) 45%,transparent)}
+.body a:hover{text-decoration-color:var(--accent)}
+.body .lnk a{text-decoration:none}.body .lnk a:hover{color:var(--text)}
+.body strong{font-weight:600}
+.body h2 strong,.body h3 strong,.body h4 strong{font-weight:inherit}
+.body h3{margin-top:32px;font-size:var(--fs-card-title);font-weight:600;letter-spacing:-.01em;scroll-margin-top:60px}
+.body h4{margin-top:24px;font-size:var(--fs-ui);font-weight:600;scroll-margin-top:60px}
+.body ol{padding-left:22px}
+.body li::marker{color:var(--text-faint)}
+.body li>ul,.body li>ol,.body li>p+p{margin-top:6px}
+.body li:has(>input[type="checkbox"]){list-style:none;margin-left:-20px}
+.body input[type="checkbox"]{accent-color:var(--accent);margin-right:8px;vertical-align:-1px}
+.body blockquote{padding-left:16px;border-left:2px solid var(--border-strong);color:var(--text-muted)}
+.body blockquote>*+*{margin-top:12px}
+.body hr{border:0;border-top:1px solid var(--border)}
+.body img{max-width:100%}
+.body mark{background:color-mix(in oklab,var(--yellow) 28%,transparent);color:inherit;padding:0 3px;border-radius:3px}
+.body kbd{font:500 12.5px var(--font-mono);color:var(--text-muted);padding:1px 6px;border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;background:var(--surface)}
+.body sup,.body sub{line-height:0}
+.body .tbl{overflow-x:auto}
+.body details{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px}
+.body summary{cursor:pointer;font:500 var(--fs-meta) var(--font-mono);color:var(--text-muted)}
+.body details[open]>summary{margin-bottom:10px}
+.body details>:not(summary)+*{margin-top:12px}
+
+/* footnotes */
+.body .footnote-ref{font:500 11px var(--font-mono);text-decoration:none;padding:0 1px}
+.body .footnotes{margin-top:44px;font-size:14.5px;color:var(--text-muted)}
+.body .footnotes hr{margin-bottom:16px}
+.body .footnotes li+li{margin-top:6px}
+.body .footnote-backref{text-decoration:none;margin-left:4px}
+
+/* callouts: GitHub alert types + a few Obsidian aliases */
+.callout.important{--c:var(--accent)}
+.callout>:not(b)+:not(b){margin-top:8px}
+.callout ul,.callout ol{padding-left:20px}
+
+/* ---------- code ---------- */
+.body pre code{background:none;padding:0;border-radius:0;font:inherit;color:inherit}
+.code .highlight{border-radius:inherit}
+.chroma .line{display:inline}
+.chroma .hl{display:block;margin:0 -18px;padding:0 18px;background:color-mix(in oklab,var(--accent) 14%,transparent)}
+.chroma .ln{margin-right:16px;color:var(--text-faint);user-select:none}
+/* the prototype's .n (number) and .m (mono meta) classes collide with Chroma's */
+.chroma .n{color:inherit}
+.chroma .m{font:inherit}
+/* Chroma token classes → theme tokens (Dracula roles) */
+.chroma .k,.chroma .kd,.chroma .kn,.chroma .kp,.chroma .kr,.chroma .ow,.chroma .o,.chroma .nt,.chroma .cp,.chroma .se,.chroma .si{color:var(--pink)}
+.chroma .kt,.chroma .nb,.chroma .bp,.chroma .nc,.chroma .ne{color:var(--cyan)}
+.chroma .kc,.chroma .m,.chroma .mb,.chroma .mf,.chroma .mh,.chroma .mi,.chroma .mo,.chroma .il,.chroma .ss,.chroma .no{color:var(--accent)}
+.chroma .s,.chroma .s1,.chroma .s2,.chroma .sb,.chroma .sc,.chroma .sd,.chroma .sh,.chroma .sx,.chroma .dl,.chroma .sa{color:var(--yellow)}
+.chroma .sr{color:var(--red)}
+.chroma .c,.chroma .c1,.chroma .cm,.chroma .ch,.chroma .cs,.chroma .cpf{color:var(--text-faint);font-style:italic}
+.chroma .nf,.chroma .fm,.chroma .nd,.chroma .na{color:var(--green)}
+.chroma .nv,.chroma .vc,.chroma .vg,.chroma .vi,.chroma .vm{color:var(--orange)}
+.chroma .p{color:var(--text-muted)}
+.chroma .gd{color:var(--red)}.chroma .gi{color:var(--green)}
+.chroma .gh,.chroma .gu{color:var(--accent);font-weight:600}
+.chroma .ge{font-style:italic}.chroma .gs{font-weight:600}
+.chroma .gp{color:var(--text-faint)}.chroma .go{color:var(--text-muted)}.chroma .gt{color:var(--red)}
+
+/* ---------- math (KaTeX, rendered at build time) ---------- */
+.body .math{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.body .katex{font-size:1.06em}
+.body .katex-display{margin:0}
+
+/* ---------- diagrams (Mermaid) ---------- */
+.diagram{background:var(--sidebar);border-radius:var(--radius);padding:20px;overflow-x:auto}
+.diagram .mermaid{display:flex;justify-content:center;margin:0;font:var(--fs-code)/1.7 var(--font-mono);color:var(--text-muted);white-space:pre}
+.js .diagram .mermaid:not([data-processed]):not(.failed){visibility:hidden;min-height:160px}
+.diagram svg{max-width:100%;height:auto}
+.diagram svg *{filter:none!important}
+
+/* ---------- figures with real images ---------- */
+.shot.img{aspect-ratio:auto;display:flex;justify-content:center;align-items:center;padding:0}
+.shot.img img{display:block;width:auto;max-width:100%;height:auto;max-height:80vh;object-fit:contain}
+.lb img{display:block;max-width:min(1600px,92vw);max-height:88vh;object-fit:contain;border:1px solid var(--border-strong);border-radius:var(--radius);background:var(--sidebar)}
+
+/* ---------- reading size + width (owner feedback) ----------
+   Text scales with the screen: 18px on phones/tablets → 20px on a 1440 laptop → 22px on big screens.
+   The column grows with it (46em ≈ 85 characters a line), so wide screens are filled
+   instead of leaving an empty band. Everything inside the post scales in em from the body size. */
+:root{--fs-body:clamp(18px,.5vw + 12.8px,22px);--measure:calc(var(--fs-body)*46)}
+.pw{grid-template-columns:minmax(0,var(--measure)) var(--outline-w)}
+@media(max-width:1100px){.pw{grid-template-columns:minmax(0,var(--measure))}}
+.body>*+*{margin-top:.9em}
+.body h2{margin-top:2.2em;font-size:1.28em}
+.body h2::before{font-size:.62em}
+.body h3{margin-top:1.7em;font-size:1.08em}
+.body h4{font-size:1em}
+.body code{font-size:.84em}
+.body .code pre{font-size:.78em}
+.body .callout{font-size:.92em}
+.body .callout b{font-size:.86em}
+.body table{font-size:.9em}
+.body th{font-size:.72em}
+.body figcaption{font-size:.7em}
+.body kbd{font-size:.72em}
+.body summary{font-size:.74em}
+.body .footnotes{font-size:.84em}
+.post>.lead{font-size:calc(var(--fs-body)*1.08)}
+
+/* header image under a post title (front matter: cover) — wide crop, click shows the whole image */
+.cover{margin-top:28px}
+.cover .shot.img{aspect-ratio:21/9}
+.cover .shot.img img{width:100%;height:100%;max-height:none;object-fit:cover;object-position:center 55%}
+.cover figcaption a{text-decoration:underline;text-underline-offset:2px}.cover figcaption a:hover{color:var(--accent)}
+
+/* quick open */
+.qempty{padding:10px;font:13px var(--font-mono);color:var(--text-faint)}
+
+/* 404 */
+.nf .lnk{margin-top:20px;display:flex;gap:20px;flex-wrap:wrap;font:500 14px var(--font-mono)}
+.nf .lnk a{color:var(--accent)}
+
+/* printing (Ctrl+P is quick open, but the browser menu still prints) */
+@media print{
+  html,body{height:auto}
+  body{display:block}
+  .bar,aside,.tabs,.outline,.pn,.ctools,.anc,.skip,.qo,.lb{display:none!important}
+  main{overflow:visible}
+  .pw{display:block}
+}

@@ -1,0 +1,9 @@
+/* Two families: Geist for reading, Geist Mono for everything "code" (labels, chips, nav, meta, code). */
+:root{
+--font-sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+--font-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+--fs-label:12px;--fs-meta:13px;--fs-code:13.5px;--fs-ui:15px;--fs-body:16.5px;--fs-card-title:17px;--fs-h2:21px;
+--fs-h1:clamp(32px,3.8vw,60px) /* @kind font */;--fs-post-title:clamp(30px,3.4vw,50px) /* @kind font */;
+--lh-tight:1.05 /* @kind font */;--lh-ui:1.55 /* @kind font */;--lh-body:1.7 /* @kind font */;
+--tracking-title:-0.035em /* @kind font */;
+}

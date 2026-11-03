@@ -1,0 +1,9 @@
+{{- $desc := .Description | default (.Summary | plainify | truncate 160) -}}
+<a class="card" href="{{ .RelPermalink }}" data-k="{{ .Params.category }}" data-t="|{{ delimit (.Params.tags | default slice) "|" }}|">
+  <div class="ctop"><span class="chips"><span class="chip k-{{ .Params.category }}">{{ .Params.category }}</span>{{ if .Draft }}<span class="chip draft">draft</span>{{ end }}</span><span class="m">{{ .Date.Format "2006-01-02" }}</span></div>
+  <h3>{{ .Title }}</h3>
+  {{- with $desc }}
+  <p>{{ . }}</p>
+  {{- end }}
+  <div class="foot"><span class="m">{{ range $i, $t := .Params.tags }}{{ if $i }} {{ end }}#{{ $t }}{{ end }}</span><span class="m">{{ .ReadingTime }} min</span></div>
+</a>

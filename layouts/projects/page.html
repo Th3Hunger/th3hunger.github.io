@@ -1,0 +1,25 @@
+{{ define "main" }}
+{{- partial "validate-project.html" . -}}
+<div class="pw">
+  <article class="post">
+    <h1>{{ .Title }}</h1>
+    <div class="meta">
+      <span class="chip s-{{ .Params.status }}">{{ .Params.status }}</span>
+      {{- if .Draft }}<span class="chip draft">draft</span>{{ end }}
+      {{- with .Params.stack }}<span class="m">{{ delimit . " · " }}</span>{{ end }}
+    </div>
+    <div class="body" id="body">
+      {{- with .Description }}
+      <p>{{ . }}</p>
+      {{- end }}
+      {{- with .Params.repo }}
+      {{- $url := printf "%s.git" (strings.TrimSuffix "/" . | strings.TrimSuffix ".git") }}
+      <div class="code" data-lang="bash"><div class="highlight"><pre tabindex="0" class="chroma"><code><span class="nf">git</span> clone <span class="s">{{ $url }}</span></code></pre></div></div>
+      <p class="lnk"><a href="{{ . }}" target="_blank" rel="noopener">view on github ↗</a></p>
+      {{- end }}
+{{ .Content }}
+    </div>
+  </article>
+  {{ partial "outline.html" . }}
+</div>
+{{ end }}

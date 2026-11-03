@@ -1,0 +1,9 @@
+{{- /* ```math — same as $$…$$, GitHub-compatible. */ -}}
+{{- with try (transform.ToMath .Inner (dict "output" "htmlAndMathml" "displayMode" true)) -}}
+  {{- with .Err -}}
+    {{- errorf "%s: math block could not be rendered: %s" $.Position . -}}
+  {{- else -}}
+    {{- $.Page.Store.Set "hasMath" true -}}
+    <div class="math">{{ .Value }}</div>
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,5 @@
+{{- $f := partial "filename.html" . -}}
+{{- /* One tab rendered on the server; the script restores the other recently opened ones. */ -}}
+<nav class="tabs" id="tabs" aria-label="open files" data-file="{{ $f }}" data-url="{{ .RelPermalink }}"{{ if eq .Kind "404" }} data-transient="1"{{ end }}>
+  <span class="tab on"><a href="{{ .RelPermalink }}" aria-current="page">{{ $f }}</a><span style="width:8px"></span></span>
+</nav>

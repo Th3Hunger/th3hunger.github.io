@@ -1,0 +1,7 @@
+<a class="card" href="{{ .RelPermalink }}">
+  <div class="ctop"><span class="m pname">{{ .File.ContentBaseName }}/</span><span>{{ if .Draft }}<span class="chip draft">draft</span> {{ end }}<span class="chip s-{{ .Params.status }}">{{ .Params.status }}</span></span></div>
+  {{- with .Description }}
+  <p class="pdesc">{{ . }}</p>
+  {{- end }}
+  <div class="foot"><span class="m">{{ delimit (.Params.stack | default slice) " · " }}</span>{{ with .Params.repo }}<span class="m gh">GitHub ↗</span>{{ end }}</div>
+</a>

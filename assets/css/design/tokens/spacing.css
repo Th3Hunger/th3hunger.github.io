@@ -1,0 +1,7 @@
+/* Layout, radii. No shadows anywhere — depth comes from surface colour + 1px borders. */
+:root{
+--bar-h:52px;--sidebar-w:260px;--outline-w:220px;
+--pad-x:clamp(20px,4vw,64px);--pad-y:clamp(24px,4vw,56px);
+--gap-card:14px;--section-gap:clamp(40px,5vw,72px);
+--radius-sm:6px;--radius:10px;--radius-lg:12px;--radius-pill:999px;
+}

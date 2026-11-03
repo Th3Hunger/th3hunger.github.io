@@ -1,0 +1,19 @@
+{{- /* > [!NOTE] / [!TIP] / [!IMPORTANT] / [!WARNING] / [!CAUTION] (GitHub), plus common Obsidian names.
+     The title is the word you wrote, lowercase — or your own: > [!TIP] Custom title */ -}}
+{{- if eq .Type "alert" -}}
+  {{- $t := lower .AlertType -}}
+  {{- $kind := dict
+      "note" "note" "info" "note" "abstract" "note" "summary" "note" "todo" "note" "quote" "note"
+      "tip" "tip" "hint" "tip" "success" "tip" "check" "tip" "done" "tip"
+      "important" "important" "example" "important"
+      "warning" "warn" "attention" "warn" "question" "warn"
+      "caution" "danger" "danger" "danger" "error" "danger" "bug" "danger" "failure" "danger" "fail" "danger" -}}
+  <div class="callout {{ index $kind $t | default "note" }}">
+    <b>{{ with .AlertTitle }}{{ . }}{{ else }}{{ $t }}{{ end }}</b>
+    {{ .Text }}
+  </div>
+{{- else -}}
+  <blockquote>
+    {{ .Text }}
+  </blockquote>
+{{- end -}}

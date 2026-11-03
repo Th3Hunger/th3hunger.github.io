@@ -1,0 +1,11 @@
+{{- /* External links open in a new tab; links to files in the post's folder resolve to their published URL. */ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $href := .Destination -}}
+{{- $ext := and $u.IsAbs (in (slice "http" "https") $u.Scheme) -}}
+{{- if and (not $u.IsAbs) $u.Path (not (hasPrefix $u.Path "/")) -}}
+  {{- with .PageInner.Resources.Get $u.Path -}}
+    {{- $href = .RelPermalink }}{{ with $u.Fragment }}{{ $href = printf "%s#%s" $href . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $ext }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text }}</a>
+{{- /* keep this comment: prevents trailing whitespace */ -}}

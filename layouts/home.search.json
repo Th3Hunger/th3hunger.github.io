@@ -1,0 +1,30 @@
+{{- /* Index for the Ctrl+P quick-open box. Loaded only when someone opens search. */ -}}
+{{- $items := slice -}}
+{{- $items = $items | append (dict "i" "i" "t" "Home" "s" "README.md" "f" "README.md" "u" ("/" | relURL)) -}}
+{{- with site.Params.social.linkedin -}}
+  {{- $items = $items | append (dict "i" "@" "t" "about me" "s" "linkedin ↗" "f" "about" "u" .) -}}
+{{- end -}}
+{{- with site.GetPage "/posts" }}{{ $items = $items | append (dict "i" "›" "t" "blog" "s" "all posts" "f" "blog/" "u" .RelPermalink) }}{{ end -}}
+{{- with site.GetPage "/projects" }}{{ $items = $items | append (dict "i" "›" "t" "projects" "s" "all projects" "f" "projects/" "u" .RelPermalink) }}{{ end -}}
+{{- $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+{{- $tagCount := dict -}}
+{{- range $posts -}}
+  {{- $tags := .Params.tags | default slice -}}
+  {{- $hash := slice }}{{ range $tags }}{{ $hash = $hash | append (printf "#%s" .) }}{{ end -}}
+  {{- $items = $items | append (dict
+      "i" "#"
+      "t" .Title
+      "s" (strings.TrimSpace (printf "%s · %s" .Params.category (delimit $hash " ")) | strings.TrimSuffix " ·")
+      "f" (printf "%s.md" .File.ContentBaseName)
+      "d" .Description
+      "u" .RelPermalink
+      "x" (.Plain | replaceRE `\s+` " " | truncate 20000 "")) -}}
+  {{- range $tags }}{{ $tagCount = merge $tagCount (dict . (add (index $tagCount . | default 0) 1)) }}{{ end -}}
+{{- end -}}
+{{- range (where site.RegularPages "Section" "projects").ByTitle -}}
+  {{- $items = $items | append (dict "i" "›" "t" (printf "%s — %s" .File.ContentBaseName .Description) "s" "project" "f" (printf "%s/" .File.ContentBaseName) "d" (delimit (.Params.stack | default slice) " ") "u" .RelPermalink) -}}
+{{- end -}}
+{{- range $t, $n := $tagCount -}}
+  {{- $items = $items | append (dict "i" "#" "t" (printf "#%s" $t) "s" (printf "tag · %d %s" $n (cond (eq $n 1) "post" "posts")) "f" "" "tag" true "u" (printf "%s?tag=%s" ("/" | relURL) ($t | urlquery))) -}}
+{{- end -}}
+{{- $items | jsonify -}}

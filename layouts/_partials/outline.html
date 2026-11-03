@@ -1,0 +1,10 @@
+{{- /* Right-hand outline: section headings (## — and # , which renders as a section too). */ -}}
+{{- $hs := partial "headings.html" .Fragments.Headings -}}
+<nav class="outline" id="outline" aria-label="outline">
+  {{- with $hs }}
+  <div class="lbl">OUTLINE</div>
+  {{- range . }}
+  <a href="#{{ .ID }}" data-h="{{ .ID }}">{{ .Title | plainify }}</a>
+  {{- end }}
+  {{- end }}
+</nav>
