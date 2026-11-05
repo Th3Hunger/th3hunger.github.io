@@ -1,0 +1,8 @@
+{{- /* Private visitor stats (GoatCounter). Production builds only, not on the 404 page.
+     The script is self-hosted (static/vendor/goatcounter/count.js, ISC licence): it sends one
+     cookie-free ping per page view to your GoatCounter dashboard. */ -}}
+{{- with site.Params.goatcounter.endpoint -}}
+  {{- if and hugo.IsProduction (ne $.Kind "404") }}
+<script data-goatcounter="{{ . }}" async src="{{ "vendor/goatcounter/count.js" | relURL }}"></script>
+  {{- end -}}
+{{- end -}}

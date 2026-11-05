@@ -18,6 +18,10 @@ disableKinds = ["taxonomy", "term"]
     github = "https://github.com/Th3Hunger/"
     linkedin = "https://www.linkedin.com/in/shadyshahin/"
     x = "https://x.com/0xth3hunger"
+  # Private visitor stats (GoatCounter: no cookies, dashboard only you can see).
+  # Added to the live site only, never to local previews. Remove this block to turn it off.
+  [params.goatcounter]
+    endpoint = "https://th3hunger.goatcounter.com/count"
 
 # Markdown lives in content/posts/, visitors see /blog/.
 [permalinks]
